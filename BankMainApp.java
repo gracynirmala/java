@@ -1,55 +1,44 @@
 package gracy.com;
 
+import java .util.Scanner;
 
+	class BankBalaceCheck extends Exception{
+		public BankBalaceCheck(String s) {
+			super(s);
+		}
+	}
 	class Bank{
-		double balance;
-		Bank(){
-			balance=1000;
+		float balance;
+		public Bank() {
+			balance=10000;
 		}
-		synchronized void deposit(double damt) {
-			System.out.println("You are in deposit");
-			balance=balance+damt;
-			notify(); //method of Object class 
-			
-		}
-		
-		synchronized void withdraw(double wamt) throws InterruptedException {
-			System.out.println("You are in withdraw");
-			if(balance<wamt) {
-				wait();//method of Object class 
-			}
-		
-				balance=balance-wamt;
+		public void Withdraw(float wamount) {
+			try {
+				if(wamount>balance) {
+					throw new BankBalaceCheck  ("Insufficient Balance");
 					
-				System.out.println("You can withdraw");
-				
+				}
+				else {
+					balance=balance-wamount;
+					System.out.println("Bank Balance after with Balance"+balance);
+				}
+			}
+				catch( BankBalaceCheck e) {
+					e.printStackTrace();
+				}
 			}
 		}
-
 
 	public class BankMainApp {
 
 		public static void main(String[] args) {
-			Bank bob=new Bank();
-			new Thread() {
-				public void run() {
-					try {
-						bob.withdraw(2000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}.start();
+			Bank ob=new Bank();
+			Scanner sc=new Scanner(System.in);
+			System.out.println("Enter amount to withdraw:");
+			float wamt=sc.nextFloat();
+			ob.Withdraw(wamt);
 
-			new Thread() {
-				public void run() {
-					bob.deposit(2000);
-				}
-			}.start();
 		}
+
 	}
 
-		
-
-	
