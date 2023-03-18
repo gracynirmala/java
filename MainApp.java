@@ -1,34 +1,49 @@
-package interfacepgm;
+package gracy.com;
 
-	interface BankInterface{
-		double inamount=10000; //public static final inamount=10000;
-		void deposit(double amt); //public abstract void deposit()
-		void withdraw(double amt);//public abstract void withdraw
+
+
+class MultiplicationTable{
+	
+synchronized public void printTable(int n) {
+		for(int i=1;i<=10;i++) {
+			System.out.println(n+"x"+i+"="+n*i);
+		}
+	}
+}
+
+class MyClass2 extends Thread{
+	MultiplicationTable t2;
+	 public MyClass2(MultiplicationTable mtob) {
+		this.t2=mtob;
+	}
+
+	public void run() {
+		t2.printTable(5);
+		}
+
+	}
+class MyClass1 extends Thread{
+	MultiplicationTable t1;
+ public MyClass1(MultiplicationTable mtob) {
+		this.t1=mtob;
+	}
+
+public void run() {
+	t1.printTable(2);
+	}
+
+}
+
+public class MainApp {
+	
+	public static void main(String[] args) throws InterruptedException {
+		MultiplicationTable mtob=new MultiplicationTable();
+		MyClass1 ob1=new MyClass1(mtob);
+		MyClass2 ob2=new MyClass2(mtob);
+		ob1.start();
+		//ob1.join();
+		ob2.start();
 		
 	}
-	class MyBank implements BankInterface{
-	  double bankbal;
-		@Override
-		public void deposit(double amt) {
-			bankbal=inamount+amt;
-			System.out.println("Bank balance="+bankbal);
-			
-		}
 
-		@Override
-		public void withdraw(double amt) {
-			bankbal=bankbal-amt;
-			System.out.println("After withdraw bank balance="+bankbal);
-			
-		}
-	}
-	public class MainApp {
-
-		public static void main(String[] args) {
-			MyBank bob=new MyBank();
-			bob.deposit(20000);
-			bob.withdraw(1000);
-
-		}
-
-	}
+}
