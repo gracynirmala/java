@@ -1,49 +1,34 @@
 package gracy.com;
-
-
-
-class MultiplicationTable{
+interface f1{
+	void m1();
+}
+interface f2{
+	void m2();
+}
+interface f3 extends f1,f2{
+	void m3();
+}
+class product implements f3{
+	public void m1(){
+		System.out.println(" m1 method ");
+	}
+	public void m2(){
+		System.out.println(" m2 method ");
+}
 	
-synchronized public void printTable(int n) {
-		for(int i=1;i<=10;i++) {
-			System.out.println(n+"x"+i+"="+n*i);
-		}
-	}
+	public void m3(){
+		System.out.println(" m3 method ");
 }
-
-class MyClass2 extends Thread{
-	MultiplicationTable t2;
-	 public MyClass2(MultiplicationTable mtob) {
-		this.t2=mtob;
-	}
-
-	public void run() {
-		t2.printTable(5);
-		}
-
-	}
-class MyClass1 extends Thread{
-	MultiplicationTable t1;
- public MyClass1(MultiplicationTable mtob) {
-		this.t1=mtob;
-	}
-
-public void run() {
-	t1.printTable(2);
-	}
-
 }
-
+	
 public class MainApp {
-	
-	public static void main(String[] args) throws InterruptedException {
-		MultiplicationTable mtob=new MultiplicationTable();
-		MyClass1 ob1=new MyClass1(mtob);
-		MyClass2 ob2=new MyClass2(mtob);
-		ob1.start();
-		//ob1.join();
-		ob2.start();
-		
+
+	public static void main(String[] args) {
+		product pob=new product();
+		pob.m1();
+		pob.m2();
+		pob.m3();
+
 	}
 
 }
